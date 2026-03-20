@@ -1,3 +1,4 @@
+name: upload-widget-server
 services:
   pg:
     image: bitnami/postgresql:latest
