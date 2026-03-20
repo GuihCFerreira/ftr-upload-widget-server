@@ -1,10 +1,39 @@
-import { fastify } from "fastify";
-import { fastifyCors } from "@fastify/cors";
+import { fastifyCors } from '@fastify/cors'
+import { fastify } from 'fastify'
 
-const server = fastify();
+import {
+  hasZodFastifySchemaValidationErrors,
+  serializerCompiler,
+  validatorCompiler,
+} from 'fastify-type-provider-zod'
+import { uploadImageRoute } from './routes/upload-image'
 
-server.register(fastifyCors, { origin: "*" });
+const server = fastify()
+
+server.setValidatorCompiler(validatorCompiler)
+server.setSerializerCompiler(serializerCompiler)
+
+server.setErrorHandler((error, _request, reply) => {
+  if (hasZodFastifySchemaValidationErrors(error)) {
+    return reply.status(400).send({
+      message: 'Validation error.',
+      issues: error.validation,
+    })
+  }
+
+  // Envia o erro para alguma ferramenta de monitoramento, como Sentry, Datadog, etc.
+
+  server.log.error(error)
+
+  return reply.status(500).send({
+    message: 'Internal server error.',
+  })
+})
+
+server.register(fastifyCors, { origin: '*' })
+
+server.register(uploadImageRoute)
 
 server.listen({ port: 3333, host: '0.0.0.0' }).then(() => {
-  console.log("Server is running on port 3333");
-});
+  console.log('Server is running on port 3333')
+})
