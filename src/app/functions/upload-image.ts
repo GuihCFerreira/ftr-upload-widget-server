@@ -2,7 +2,7 @@ import { Readable } from 'node:stream'
 import z from 'zod'
 import { db } from '@/infra/db'
 import { schema } from '@/infra/db/schemas'
-import { uploadFileToStorage } from '@/infra/storage/uplod-file-to-storage'
+import { uploadFileToStorage } from '@/infra/storage/upload-file-to-storage'
 import { type Either, makeLeft, makeRight } from '@/shared/either'
 import { InvalidFileFormatError } from './errors/invalid-file-format'
 
