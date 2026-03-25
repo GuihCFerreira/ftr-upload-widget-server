@@ -8,7 +8,7 @@ import { isLeft, isRight, unwrapEither } from '@/shared/either'
 import { InvalidFileFormatError } from './errors/invalid-file-format'
 import { uploadImage } from './upload-image'
 
-describe('uploadImage', () => {
+describe('upload image', () => {
   beforeAll(() => {
     vi.mock('@/infra/storage/upload-file-to-storage', () => {
       return {
