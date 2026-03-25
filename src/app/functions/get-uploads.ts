@@ -12,7 +12,7 @@ const getUploadsInput = z.object({
   pageSize: z.number().int().positive().optional().default(20),
 })
 
-type GetUploadsInput = z.infer<typeof getUploadsInput>
+type GetUploadsInput = z.input<typeof getUploadsInput>
 
 type GetUploadsOutput = {
   uploads: { id: string; name: string; remoteUrl: string; remoteKey: string; createdAt: Date }[]
